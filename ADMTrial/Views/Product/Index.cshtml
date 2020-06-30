@@ -1,0 +1,41 @@
+﻿@model ADMTrial.Models.ProductList
+
+@{
+    ViewBag.Title = "List of Products";
+}
+
+<h2>List</h2>
+
+<table class="table">
+
+    @foreach (var item in Model.ProductModels)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.image)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.availability)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.popularity)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.id })
+        </td>
+    </tr>
+    }
+
+</table>
