@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 
 namespace ADMTrial.Models
 {
+    [XmlRoot("Store")]
     public class ProductModel
     {
         [XmlAttribute("id")]
