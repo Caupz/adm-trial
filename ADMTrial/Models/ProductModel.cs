@@ -9,27 +9,40 @@ namespace ADMTrial.Models
     public class ProductModel
     {
         [XmlAttribute("id")]
-        public string id { get; set; }
+        public string Id { get; set; }
 
         [XmlElement("Title")]
-        public string title { get; set; }
+        public string Title { get; set; }
 
         [XmlElement("Description")]
-        public string description { get; set; }
+        public string Description { get; set; }
 
         [XmlElement("Image")]
-        public string image { get; set; }
+        public string Image { get; set; }
 
-        [XmlElement("Specs")]
-        public List<string> specs { get; set; }
+        private List<string> specs = new List<string>();
+
+        [XmlArray("Specs")]
+        [XmlArrayItem("Spec")]
+        public List<string> Specs {
+            get {
+                return specs;
+            }
+            set {
+                if(value != null)
+                {
+                    specs = value;
+                }
+            }
+        }
 
         [XmlElement("Availability")]
-        public string availability { get; set; }
+        public string Availability { get; set; }
 
         [XmlElement("Price")]
-        public double price { get; set; }
+        public double Price { get; set; }
 
         [XmlElement("Popular")]
-        public int popularity { get; set; }
+        public int Popularity { get; set; }
     }
 }

@@ -6,34 +6,42 @@
 
 <h2>List</h2>
 
+<div class="sort-container">
+    <select>
+        <option></option>
+        <option>Price</option>
+        <option>Popularity</option>
+    </select>
+
+    <a href="#sort-asc">ASC</a>
+    /
+    <a href="#sort-desc">DESC</a>
+</div>
+
 <table class="table">
 
     @foreach (var item in Model.ProductModels)
     {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.id)
+            @Html.DisplayFor(modelItem => item.Image)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.title)
+            <p>@Html.DisplayFor(modelItem => item.Title)</p>
+            <p>@Html.DisplayFor(modelItem => item.Description)</p>
+            @Html.ActionLink("More Details", "Details", new { id = item.Id }, new { @class = "btn btn-default" })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.image)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.availability)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.popularity)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.id })
+            <div>
+                <div>Price: </div>
+                <div>@Html.DisplayFor(modelItem => item.Price) EUR</div>
+            </div>
+            <div>
+                <div>Availability: </div>
+                <div>@Html.DisplayFor(modelItem => item.Availability)</div>
+            </div>
         </td>
     </tr>
     }

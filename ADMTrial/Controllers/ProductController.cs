@@ -11,25 +11,47 @@ namespace ADMTrial.Controllers
 {
     public class ProductController : Controller
     {
-        // GET: Product
-        public ActionResult Index()
+        public static ProductList GetAllProducts(string filename)
         {
-            string xmlLocation = AppDomain.CurrentDomain.BaseDirectory + "/App_Data/List.xml";
+            string xmlLocation = AppDomain.CurrentDomain.BaseDirectory + "/App_Data/"+ filename;
             Type[] types = { typeof(ProductModel) };
             ProductList models = new ProductList();
             XmlSerializer serializer = new XmlSerializer(typeof(ProductList), types);
 
-            FileStream fs = new FileStream(xmlLocation, FileMode.Open);
-            models = (ProductList)serializer.Deserialize(fs);
+            FileStream fs = null;
+            try
+            {
+                fs = new FileStream(xmlLocation, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                using (TextReader tr = new StreamReader(fs))
+                {
+                    fs = null;
+                    models = (ProductList)serializer.Deserialize(tr);
+                }
+            }
+            finally
+            {
+                if (fs != null)
+                {
+                    fs.Dispose();
+                }
+            }
 
+            return models;
+        }
+
+        // GET: Product
+        public ActionResult Index()
+        {
+            ProductList models = GetAllProducts("List.xml");
             return View(models);
         }
 
-        // GET: Product/Details/5
-        public ActionResult Details(int id)
+        // GET: Product/Details/PROD11
+        public ActionResult Details(string id)
         {
-            // TODO
-            return View();
+            ProductList models = GetAllProducts("Detail.xml");
+            ProductModel model = models.ProductModels.Where(p => (p.Id == id)).SingleOrDefault();
+            return View(model);
         }
     }
 }
