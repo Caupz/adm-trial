@@ -44,5 +44,14 @@ namespace ADMTrial.Models
 
         [XmlElement("Popular")]
         public int Popularity { get; set; }
+
+        public string DescriptionWithId { get => GetDescriptionWithId(); }
+
+        public string GetDescriptionWithId() {
+            string desc = Description;
+            desc = desc.Replace("</b>", String.Format("</b> ({0})", Id));
+
+            return desc;
+        }
     }
 }
