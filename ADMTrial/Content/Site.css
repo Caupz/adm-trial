@@ -22,3 +22,13 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.sort-btn {
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+}
+
+.sort-btn.active {
+    font-weight: bold;
+}

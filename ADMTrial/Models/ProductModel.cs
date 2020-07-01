@@ -41,9 +41,26 @@ namespace ADMTrial.Models
 
         [XmlElement("Price")]
         public double Price { get; set; }
+        
+        private List<int> sorting = new List<int>();
+        public int Popularity { get { return sorting.FirstOrDefault(); } }
 
-        [XmlElement("Popular")]
-        public int Popularity { get; set; }
+        [XmlArray("Sorting")]
+        [XmlArrayItem("Popular")]
+        public List<int> Sorting
+        {
+            get
+            {
+                return sorting;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    sorting = value;
+                }
+            }
+        }
 
         public string DescriptionWithId { get => GetDescriptionWithId(); }
 
