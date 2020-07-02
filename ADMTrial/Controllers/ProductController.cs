@@ -72,14 +72,20 @@ namespace ADMTrial.Controllers
 
             ProductModel model = productList.ProductModels.FirstOrDefault();
 
+            if(model == null) // NOTE (Caupo 02.07.2020): This occurs randomly sometimes for unknown reasons when starting the application.
+            {
+                throw new Exception("Page not found");
+            }
+
             return View(model);
         }
 
         // GET: Product/GetAvailability/PROD11
+        [HttpPost]
         public ActionResult GetAvailability(string id)
         {
             ProductList models = GetAllProducts("Detail.xml");
-            ProductModel model = models.ProductModels.Where(p => (p.Id == id)).SingleOrDefault();
+            ProductModel model = models.ProductModels.Where(p => (p.Id == id)).FirstOrDefault();
             return Json(new { availability = model.Availability });
         }
     }

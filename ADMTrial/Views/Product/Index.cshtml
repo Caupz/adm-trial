@@ -4,9 +4,10 @@
     ViewBag.Title = "List of Products";
 }
 
-<h2>List</h2>
+<h2>Product list</h2>
 
 <div class="sort-container">
+    <p>Sort by:</p>
     <select id="sort-option">
         <option value=""></option>
         <option value="Price">Price</option>
@@ -22,5 +23,4 @@
 
 <script>
     var models = @Html.Raw(Json.Encode(Model.ProductModels));
-    console.log("models", models);
 </script>

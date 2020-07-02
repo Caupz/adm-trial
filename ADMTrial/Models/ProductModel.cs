@@ -25,7 +25,7 @@ namespace ADMTrial.Models
 
         [XmlArray("Specs")]
         [XmlArrayItem("Spec")]
-        public List<string> Specs {
+        public List<string> Specifications {
             get {
                 return specs;
             }

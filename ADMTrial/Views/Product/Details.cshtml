@@ -7,23 +7,26 @@
 <h2>Product Details</h2>
 
 <div class="product">
+    <p>@Html.DisplayFor(model => model.Title)</p>
 
     <div>
-        <p>@Html.DisplayFor(model => model.Title)</p>
+        <div>
+            <img src="@Url.Content("/Content/images/" + Model.Image)" alt="Product image" />
+        </div>
+        <div>
+            <p>@Html.Raw(Model.Description)</p>
+            <div>@Html.DisplayNameFor(model => model.Price): @Html.DisplayFor(model => model.Price)</div>
+        </div>
+    </div>
+    <div>
+        <p>@Html.DisplayNameFor(model => model.Specifications)</p>
 
-        <div>
-            <div>@Html.DisplayNameFor(model => model.Image)</div>
-            <div>
-                <p>@Html.DisplayFor(model => model.Description)</p>
-                <div>@Html.DisplayNameFor(model => model.Price): @Html.DisplayFor(model => model.Price)</div>
-            </div>
-        </div>
-        <div>
-            @foreach (var item in Model.Specs)
+        <ul>
+            @foreach (var item in Model.Specifications)
             {
-                <p>@item</p>
+                <li>@item</li>
             }
-        </div>
+        </ul>
     </div>
 </div>
 <p>

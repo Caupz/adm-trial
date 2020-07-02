@@ -32,3 +32,35 @@ textarea {
 .sort-btn.active {
     font-weight: bold;
 }
+
+.product > div > div, .product > div > div > * {
+    display: inline-block;
+}
+
+li {
+    list-style: none;
+}
+
+.product > div > div:last-child, .product > div > div > * {
+    width: 49%;
+}
+
+tr td:first-child {
+    width: 220px;
+}
+
+tr td:last-child > div {
+    display: flex;
+}
+
+tr td:last-child > div > div {
+    flex: 1;
+}
+
+.sort-container {
+    margin: 20px 0;
+}
+
+.sort-container p {
+    display: inline-block;
+}

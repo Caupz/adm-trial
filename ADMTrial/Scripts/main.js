@@ -38,7 +38,6 @@ function SetSortOrder(newOrder) {
 function SortBy(propertyName, order) {
     models = originalOrderModels;
     models.sort((a, b) => parseFloat(a[propertyName]) - parseFloat(b[propertyName]));
-    console.log("SortBy", order);
 
     if (order === "DESC") {
         models.reverse();
@@ -74,7 +73,7 @@ function RenderProductRow(product) {
 
     let tdImage = document.createElement("td");
     let image = document.createElement("img");
-    image.src = product.Image;
+    image.src = "/Content/images/" + product.Image;
     image.alt = product.Title;
     tdImage.appendChild(image);
     tr.appendChild(tdImage);
@@ -85,10 +84,8 @@ function RenderProductRow(product) {
     tdDescription.appendChild(pTitle);
 
     let pDescription = document.createElement("p");
-    pDescription.innerText = product.DescriptionWithId;
-    let pPopularity = document.createElement("p"); // REMOVE AFTER
-    pPopularity.innerText = product.Popularity; // REMOVE AFTER
-    tdDescription.appendChild(pPopularity); // REMOVE AFTER
+    pDescription.innerHTML = product.DescriptionWithId;
+    tdDescription.appendChild(pDescription);
 
     let aMoreDetails = document.createElement("a");
     aMoreDetails.innerText = "More Details";
@@ -101,21 +98,34 @@ function RenderProductRow(product) {
     let tdPriceAndAvailable = document.createElement("td");
     let tdPrice = document.createElement("div");
     let tdPriceLabel = document.createElement("div");
-    tdPriceLabel.innerText = "Price";
+    tdPriceLabel.innerText = "Price:";
     tdPrice.appendChild(tdPriceLabel);
 
     let tdPriceValue = document.createElement("div");
-    tdPriceLabel.innerText = product.Price + " EUR";
+    tdPriceValue.innerText = product.Price + " EUR";
     tdPrice.appendChild(tdPriceValue);
     tdPriceAndAvailable.appendChild(tdPrice);
 
     let divAvailability = document.createElement("div");
     let divAvailabilityLabel = document.createElement("div");
-    divAvailabilityLabel .innerText = "Availability";
+    divAvailabilityLabel.innerText = "Availability:";
     divAvailability.appendChild(divAvailabilityLabel);
 
     let divAvailabilityValue = document.createElement("div");
-    divAvailabilityValue.innerText = product.Price + " EUR";
+
+    let formData = new FormData();
+    formData.append("id", product.Id);
+
+    let req = new XMLHttpRequest();
+    req.open("POST", "/Product/GetAvailability/" + product.Id, true);
+    req.onload = function (event) {
+        if (req.status === 200) {
+            divAvailabilityValue.innerText = JSON.parse(this.responseText).availability;
+        }
+    };
+
+    req.send(formData);
+
     divAvailability.appendChild(divAvailabilityValue);
     tdPriceAndAvailable.appendChild(divAvailability);
 
@@ -132,10 +142,8 @@ function SetSortField(newField) {
 function SortTable() {
     if (sortField !== "") {
         SortBy(sortField, sortOrder);
-        console.log("SortTable", sortField, sortOrder);
     } else {
         models = originalOrderModels;
-        console.log("SortTable DEFAULT");
     }
 
     RenderProductRows();
